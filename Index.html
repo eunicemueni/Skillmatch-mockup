@@ -1,69 +1,288 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Skillmatch Marketplace</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skillmatch Marketplace — Jobs & Tasks</title>
+
+<!-- Open Graph / Facebook -->
+<meta property="og:title" content="Skillmatch Marketplace — Jobs & Tasks">
+<meta property="og:description" content="Find jobs, tasks, and micro-gigs instantly. Generate demo videos and explore opportunities.">
+<meta property="og:image" content="https://skillmatch-live.onrender.com/495fc095-ef40-4e2e-9764-4dc12746feec.png">
+<meta property="og:url" content="https://skillmatch-live.onrender.com/">
+<meta property="og:type" content="website">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Skillmatch Marketplace — Jobs & Tasks">
+<meta name="twitter:description" content="Find jobs, tasks, and micro-gigs instantly. Generate demo videos and explore opportunities.">
+<meta name="twitter:image" content="https://skillmatch-live.onrender.com/495fc095-ef40-4e2e-9764-4dc12746feec.png">
+
+<style>
+  body { font-family: Arial, sans-serif; margin:0; padding:0; background:#0B0E15; color:#fff; overflow-x:hidden; }
+  header { display:flex; justify-content:space-between; align-items:center; padding:20px 5%; background:#003366; flex-wrap:wrap; position:relative; z-index:10;}
+  header img { width:140px; height:auto; }
+  header .btn-login, header .btn-signup { margin:5px 5px 0 0; padding:8px 16px; border:none; border-radius:6px; cursor:pointer; font-weight:bold; }
+  .btn-login { background:transparent; border:2px solid #FFD700; color:#FFD700; }
+  .btn-signup { background:#D4AF37; color:#000; }
+
+  main { padding:30px 5%; max-width:1200px; margin:auto; position:relative; z-index:1; }
+  h1 { text-align:center; color:#FFD700; font-size:2rem; margin-bottom:20px; }
+  .banner { background:#FFD700; color:#003366; padding:15px; margin:20px 0; font-weight:bold; border-radius:8px; text-align:center; }
+  .btn-demo { background:#0F4BE5; color:#fff; border:none; padding:10px 20px; border-radius:6px; cursor:pointer; font-weight:bold; margin-top:10px; }
+
+  section { margin-bottom:50px; }
+  h2 { color:#FFD700; font-size:1.5rem; margin-bottom:20px; text-align:center; }
+  .grid { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }
+  .card { background:#071124; border:2px solid #0077B5; border-radius:12px; width:100%; max-width:260px; padding:18px; cursor:pointer; transition:transform 0.3s, box-shadow 0.3s; }
+  .card:hover { transform:translateY(-5px) scale(1.02); box-shadow:0 6px 12px rgba(212,175,55,0.6); }
+  .card h3 { color:#0F4BE5; margin-bottom:8px; font-size:1.1rem; }
+  .card p { color:#fff; margin:2px 0; font-size:0.9rem; }
+
+  .modal, .overlay { display:none; position:fixed; inset:0; }
+  .overlay { background:rgba(0,0,0,0.7); z-index:20; }
+  .modal { background:#071124; border-radius:12px; padding:25px; width:90%; max-width:400px; top:50%; left:50%; transform:translate(-50%, -50%); z-index:30; }
+  .modal h3 { color:#FFD700; margin-bottom:12px; }
+  .modal p { margin-bottom:8px; }
+  .modal input { width:100%; padding:10px; margin-bottom:10px; border-radius:6px; border:none; background:#00000050; color:#fff; }
+  .modal button { width:100%; padding:10px; margin-top:10px; border:none; border-radius:6px; font-weight:bold; cursor:pointer; }
+  .btn-apply { background:#0F4BE5; color:#fff; }
+  .btn-close { background:transparent; border:2px solid #fff; color:#fff; }
+
+  footer { background:#003366; color:#FFD700; text-align:center; padding:20px; font-weight:bold; position:relative; z-index:1; }
+  footer a { color:#FFD700; text-decoration:underline; }
+
+  #flakes { position: fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; }
+  .flake { position:absolute; color:#D4AF37; font-size:12px; user-select:none; opacity:0.8; }
+
+  @media(max-width:768px){
+    header { flex-direction: column; align-items:flex-start; }
+    header img { margin-bottom:10px; }
+    .grid { gap:15px; }
+    .card { width:100%; max-width:100%; }
+    h2 { font-size:1.3rem; }
+  }
+  @media(max-width:480px){
+    main { padding:20px 3%; }
+    .btn-demo { padding:8px 16px; }
+  }
+</style>
 </head>
-<body class="bg-blue-900 text-white font-sans">
+<body>
 
-  <!-- Header -->
-  <header class="p-6 text-center">
-    <h1 class="text-5xl font-bold mb-2">Skillmatch</h1>
-    <p class="text-lg">Global Marketplace for Micro Tasks</p>
-    <nav class="mt-4 space-x-6">
-      <a href="index.html" class="hover:underline">Home</a>
-      <a href="about.html" class="hover:underline">About</a>
-      <a href="#" class="hover:underline">Contact</a>
-    </nav>
-  </header>
+<header>
+  <img src="495fc095-ef40-4e2e-9764-4dc12746feec.png" alt="SkillMatch Logo" onerror="this.style.display='none';">
+  <div>
+    <button class="btn-login" onclick="openModal('login')">Login</button>
+    <button class="btn-signup" onclick="openModal('signup')">Signup</button>
+  </div>
+</header>
 
-  <!-- Hero Section -->
-  <section class="text-center py-16 bg-blue-800">
-    <h2 class="text-4xl font-bold mb-4">Hire Taskers or Complete Tasks Worldwide</h2>
-    <p class="mb-6 max-w-xl mx-auto">Connect with clients and freelancers from every corner of the globe. Scale your work or earn income completing micro-tasks online.</p>
-    <button class="bg-yellow-500 text-blue-900 px-8 py-3 font-bold rounded hover:bg-yellow-400">Get Started</button>
+<main>
+  <h1>Skillmatch Marketplace</h1>
+  <div class="banner">Payments & full features coming soon! Enjoy the demo.</div>
+  <div style="text-align:center;">
+    <button class="btn-demo" onclick="generateDemoVideo()">Generate Demo Video</button>
+  </div>
+
+  <!-- Jobs Section -->
+  <section>
+    <h2>Jobs</h2>
+    <div class="grid" id="jobsGrid"></div>
   </section>
 
-  <!-- How It Works Section -->
-  <section class="py-16 text-blue-900 bg-white text-center">
-    <h3 class="text-3xl font-bold mb-12">How It Works</h3>
-    <div class="flex flex-wrap justify-center gap-10">
-      <!-- Client Card -->
-      <div class="bg-gray-100 p-6 rounded-lg shadow-lg w-72">
-        <img src="https://via.placeholder.com/150" alt="Client" class="mx-auto mb-4 h-24">
-        <h4 class="font-bold mb-2">Post Tasks</h4>
-        <p>Clients post micro-tasks that need to be completed by skilled workers globally.</p>
+  <!-- Tasks Section -->
+  <section>
+    <h2>Tasks / Micro Gigs</h2>
+    <div class="grid" id="tasksGrid"></div>
+  </section>
+
+  <!-- New Mockup Sections -->
+
+  <!-- Admin Dashboard -->
+  <section>
+    <h2>Admin Dashboard Preview</h2>
+    <div class="grid">
+      <div class="card" onclick="alert('Admin: View Users')">
+        <h3>Total Users</h3>
+        <p>1,200</p>
       </div>
-      <!-- Tasker Card -->
-      <div class="bg-gray-100 p-6 rounded-lg shadow-lg w-72">
-        <img src="https://via.placeholder.com/150" alt="Tasker" class="mx-auto mb-4 h-24">
-        <h4 class="font-bold mb-2">Taskers Complete Work</h4>
-        <p>Taskers from around the world pick up tasks and deliver high-quality results.</p>
+      <div class="card" onclick="alert('Admin: View Tasks')">
+        <h3>Total Tasks</h3>
+        <p>5,400</p>
       </div>
-      <!-- Payout Card -->
-      <div class="bg-gray-100 p-6 rounded-lg shadow-lg w-72">
-        <img src="https://via.placeholder.com/150" alt="Globe" class="mx-auto mb-4 h-24">
-        <h4 class="font-bold mb-2">Secure Payouts</h4>
-        <p>Skillmatch ensures instant payouts via PayPal, Stripe, or M-Pesa for completed tasks.</p>
+      <div class="card" onclick="alert('Admin: Manage Payments')">
+        <h3>Payments Pending</h3>
+        <p>120</p>
       </div>
     </div>
   </section>
 
-  <!-- Call to Action -->
-  <section class="py-16 text-center bg-blue-800">
-    <button class="bg-yellow-500 text-blue-900 px-8 py-3 font-bold rounded hover:bg-yellow-400">Sign Up Now</button>
+  <!-- Employer Panel -->
+  <section>
+    <h2>Employer Panel Preview</h2>
+    <div class="grid">
+      <div class="card" onclick="alert('Post a new job')">
+        <h3>Post Job</h3>
+        <p>Create a new job for global taskers.</p>
+      </div>
+      <div class="card" onclick="alert('View your jobs')">
+        <h3>My Jobs</h3>
+        <p>Track applications and completions.</p>
+      </div>
+    </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="bg-blue-900 text-white py-12 text-center">
-    <p class="mb-2">Global Support: <a href="mailto:support@skillmatch.com" class="underline">support@skillmatch.com</a></p>
-    <p class="mb-4">Payments:</p>
-    <img src="https://via.placeholder.com/200x50" alt="Trust Badges" class="mx-auto h-12">
-    <p class="text-sm mt-4">Serving clients & taskers worldwide | Instant payouts & secure transactions</p>
-    <p class="text-sm mt-2">Skillmatch © 2025 | Launched 14/10/2025</p>
-  </footer>
+  <!-- Recruiter Panel -->
+  <section>
+    <h2>Recruiter Panel Preview</h2>
+    <div class="grid">
+      <div class="card" onclick="alert('Search candidates')">
+        <h3>Search Candidates</h3>
+        <p>Find top taskers globally.</p>
+      </div>
+      <div class="card" onclick="alert('Manage candidates')">
+        <h3>Candidate Management</h3>
+        <p>Shortlist or message taskers.</p>
+      </div>
+    </div>
+  </section>
 
+  <!-- Payment / Plans -->
+  <section>
+    <h2>Payment & Plans</h2>
+    <div class="grid">
+      <div class="card" onclick="alert('Free Plan selected')">
+        <h3>Free Plan</h3>
+        <p>1 task/demo video per day</p>
+      </div>
+      <div class="card" onclick="alert('Pro Plan selected')">
+        <h3>Pro Plan</h3>
+        <p>Unlimited tasks, full features</p>
+      </div>
+      <div class="card" onclick="alert('Diamond Plan selected')">
+        <h3>Diamond Plan</h3>
+        <p>Priority support + premium access</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- About / Launch Info -->
+  <section>
+    <h2>About Skillmatch</h2>
+    <p style="text-align:center; max-width:700px; margin:auto;">
+      Skillmatch is a global marketplace connecting clients and taskers from all over the world. 
+      Launched on <strong>14/10/2025</strong>, it offers secure payments, instant task assignments, and a platform built for scaling globally.
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  &copy; 2025 Skillmatch Marketplace — <a href="#">See More Jobs / Tasks</a>
+</footer>
+
+<div id="flakes"></div>
+
+<!-- Modals -->
+<div class="overlay" id="overlay" onclick="closeModal()"></div>
+<div class="modal" id="jobModal">
+  <h3 id="modalTitle"></h3>
+  <p id="modalCompany"></p>
+  <p id="modalSalary"></p>
+  <p id="modalDesc"></p>
+  <button class="btn-apply" onclick="applyJob()">Apply Now</button>
+  <button class="btn-close" onclick="closeModal()">Close</button>
+</div>
+<div class="modal" id="loginModal">
+  <h3 id="loginTitle"></h3>
+  <input type="email" placeholder="Email">
+  <input type="password" placeholder="Password">
+  <button style="background:#D4AF37; color:#000;">Submit</button>
+  <button class="btn-close" onclick="closeModal()">Close</button>
+</div>
+
+<script>
+// Demo jobs and tasks
+const jobs=[], tasks=[];
+for(let i=1;i<=20;i++){
+  jobs.push({id:i,title:`Job Position ${i}`,company:`Company ${i}`,salary:`$${500+i*20} - $${1000+i*30}`,desc:`Demo description for Job Position ${i}.`});
+  tasks.push({id:i,title:`Task ${i}`,reward:(0.5+i*0.25).toFixed(2),est:`${2+i} min`});
+}
+
+const jobsGrid=document.getElementById("jobsGrid");
+const tasksGrid=document.getElementById("tasksGrid");
+
+jobs.forEach(job=>{
+  const div=document.createElement("div");
+  div.className="card";
+  div.innerHTML=`<h3>${job.title}</h3><p>${job.company}</p><p>${job.salary}</p>`;
+  div.onclick=()=>openJobModal(job);
+  jobsGrid.appendChild(div);
+});
+
+tasks.forEach(task=>{
+  const div=document.createElement("div");
+  div.className="card";
+  div.innerHTML=`<h3>${task.title}</h3><p>Reward: $${task.reward}</p><p>Est: ${task.est}</p>`;
+  div.onclick=()=>alert("Start Task: "+task.title);
+  tasksGrid.appendChild(div);
+});
+
+// Modals
+const overlay=document.getElementById("overlay");
+const jobModal=document.getElementById("jobModal");
+const loginModal=document.getElementById("loginModal");
+
+function openJobModal(job){
+  document.getElementById("modalTitle").innerText=job.title;
+  document.getElementById("modalCompany").innerText=job.company;
+  document.getElementById("modalSalary").innerText=job.salary;
+  document.getElementById("modalDesc").innerText=job.desc;
+  overlay.style.display="block"; jobModal.style.display="block";
+}
+
+function openModal(type){
+  overlay.style.display="block"; loginModal.style.display="block";
+  document.getElementById("loginTitle").innerText=type==="login"?"Login":"Signup";
+}
+
+function closeModal(){
+  overlay.style.display="none"; jobModal.style.display="none"; loginModal.style.display="none";
+}
+
+function applyJob(){ alert("Apply Flow (connect to Firebase or email)"); closeModal(); }
+function generateDemoVideo(){ alert("Demo video generated! (6 seconds preview)"); }
+
+// Golden flakes
+const flakesContainer = document.getElementById('flakes');
+const flakesCount = 50;
+for(let i=0;i<flakesCount;i++){
+  const flake = document.createElement('div');
+  flake.className='flake';
+  flake.innerHTML='✦';
+  flake.style.left=Math.random()*window.innerWidth+'px';
+  flake.style.top=Math.random()*window.innerHeight+'px';
+  flake.style.fontSize=8+Math.random()*12+'px';
+  flake.style.opacity=0.5+Math.random()*0.5;
+  flakesContainer.appendChild(flake);
+}
+
+function animateFlakes(){
+  document.querySelectorAll('.flake').forEach(flake=>{
+    let top=parseFloat(flake.style.top);
+    let left=parseFloat(flake.style.left);
+    top+=0.3+Math.random()*1.2;
+    left+=Math.sin(top/50)*0.5;
+    if(top>window.innerHeight) top=-10;
+    if(left>window.innerWidth) left=0;
+    if(left<0) left=window.innerWidth;
+    flake.style.top=top+'px';
+    flake.style.left=left+'px';
+  });
+  requestAnimationFrame(animateFlakes);
+}
+animateFlakes();
+</script>
 </body>
 </html>
