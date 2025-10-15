@@ -1,0 +1,8 @@
+skillmatch-mockup/
+├── index.html
+├── about.html
+├── assets/
+│   ├── globe.png
+│   ├── tasker.png
+│   ├── client.png
+│   └── trust-badges.png
